@@ -21,12 +21,11 @@ Node *remove_dups(Node *head) {
     if (it == visited.end()) {
       visited.insert(cur->val);
       prev = cur;
-      cur = cur->next;
     }
     else {
       prev->next = cur->next;
-      cur = cur->next;
     }
+    cur = cur->next;
   }
   return head;
 }
