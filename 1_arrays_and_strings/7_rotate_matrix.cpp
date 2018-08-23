@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cassert>
+#include "helper.hpp"
 using namespace std;
 
 
@@ -19,16 +20,6 @@ void rotate_matrix(vector<vector<int>> &matrix) {
       swap(cur,matrix[s][s+i]);
     }
   }
-}
-
-void print(const vector<vector<int>> &m) {
-  for (const auto &r : m) {
-    for (const auto &c : r) {
-      printf("%2d ", c);
-    }
-    cout << "\n";
-  }
-  cout << "\n";
 }
 
 int main() {

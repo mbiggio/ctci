@@ -1,5 +1,7 @@
 #include <iostream>
 #include <bitset>
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 using namespace std;
 
 /*
@@ -21,9 +23,29 @@ bool is_unique(const string &s) {
   return true;
 }
 
-int main() {
-  cout << is_unique("abcde") << endl;
-  cout << is_unique("abcda") << endl;
-  cout << is_unique("a") << endl;
+TEST(is_unique_test, unique) {
+  static constexpr const char *kUnique = "abcde";
+  EXPECT_TRUE(is_unique(kUnique));
+}
+
+TEST(is_unique_test, non_unique) {
+  static constexpr const char *kNonUnique = "abcda";
+  EXPECT_FALSE(is_unique(kNonUnique));
+}
+
+TEST(is_unique_test, single_char) {
+  static constexpr const char *kSingle = "a";
+  EXPECT_TRUE(is_unique(kSingle));
+}
+
+TEST(is_unique_test, empty) {
+  static constexpr const char *kEmpty = "";
+  EXPECT_TRUE(is_unique(kEmpty));
+}
+
+
+int main(int argc, char** argv) {
+  ::testing::InitGoogleMock(&argc, argv);
+  return RUN_ALL_TESTS();
   return 0;
 }

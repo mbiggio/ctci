@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include "helper.hpp"
 using namespace std;
 
 /*
@@ -58,16 +59,6 @@ void zero_matrix(vector<vector<int>> &m) {
   }
 
   zero_out_matrix(zero_first_row, zero_first_col, m);
-}
-
-void print(const vector<vector<int>> &m) {
-  for (const auto &r : m) {
-    for (const auto &c : r) {
-      printf("%2d ", c);
-    }
-    cout << "\n";
-  }
-  cout << "\n";
 }
 
 int main() {
