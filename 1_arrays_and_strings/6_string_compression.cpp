@@ -11,15 +11,13 @@ using namespace std;
 
 string compress_string(const string &s) {
   stringstream result;
-  for (int i=0; i<s.size(); ++i) {
+  for (int i=0; i<s.size(); ) {
     int count = 0;
     char cur = s[i];
     while(i<s.size() && s[i]==cur) {
       ++count;
       ++i;
     }
-    --i;
-
     result << cur << count;
 
   }
