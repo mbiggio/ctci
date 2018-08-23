@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "helper.hpp"
+#include "array_matrix.hpp"
 using namespace std;
 
 /*

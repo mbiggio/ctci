@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cassert>
-#include "helper.hpp"
+#include "array_matrix.hpp"
 using namespace std;
 
 

@@ -1,5 +1,5 @@
-#ifndef __HELPER__
-#define __HELPER__
+#ifndef __ARRAY_MATRIX__
+#define __ARRAY_MATRIX__
 #include <iostream>
 #include <vector>
 
