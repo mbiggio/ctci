@@ -36,12 +36,16 @@ private:
 /* ============= the Dog and Cat subclasses ========== */
 
 class Dog : public Animal {
+public:
+  Dog(string name): Animal(name) {};
   animalType get_type() const {
     return Animal::dog;
   }
 };
 
 class Cat : public Animal {
+public:  
+  Cat(string name): Animal(name) {};
   animalType get_type() const {
     return Animal::cat;
   }
@@ -53,18 +57,18 @@ class AnimalShelter {
 public:
 
   AnimalShelter() : arrivalCounter(0) {};
-  void enqueue(shared_ptr<Animal> animal);
-  shared_ptr<Animal> dequeueAny();
-  shared_ptr<Animal> dequeueType(Animal::animalType type);
+  void enqueue(unique_ptr<Animal> &&animal);
+  unique_ptr<Animal> dequeueAny();
+  unique_ptr<Animal> dequeueType(Animal::animalType type);
 
 private:
 
   class Ticket {
   public:
-    Ticket(shared_ptr<Animal> animal, int time) : 
-      _animal(animal), _arrivalTime(time) {};
+    Ticket(unique_ptr<Animal> &&animal, int time) : 
+      _animal(move(animal)), _arrivalTime(time) {};
     unsigned long long _arrivalTime;
-    shared_ptr<Animal> _animal;
+    unique_ptr<Animal> _animal;
   };
   array<queue<Ticket>,Animal::kNumTypes> _animalQueues;
   unsigned long long arrivalCounter;
@@ -73,20 +77,21 @@ private:
 
 /* =========== method definitions ============= */
 
-void AnimalShelter::enqueue(shared_ptr<Animal> animal) {
+void AnimalShelter::enqueue(unique_ptr<Animal> &&animal) {
   assert(animal);
-  _animalQueues[animal->get_type()].push(Ticket(animal, arrivalCounter++));
+  int type = animal->get_type();
+  _animalQueues[type].push(Ticket(move(animal), arrivalCounter++));
 }
 
-shared_ptr<Animal> AnimalShelter::dequeueType(Animal::animalType type) {
+unique_ptr<Animal> AnimalShelter::dequeueType(Animal::animalType type) {
   if (_animalQueues[type].empty()) return nullptr;
-  auto animal = _animalQueues[type].front()._animal;
+  auto animal = move(_animalQueues[type].front()._animal);
   _animalQueues[type].pop();
   return animal;
 }
 
-shared_ptr<Animal> AnimalShelter::dequeueAny() {
-  shared_ptr<Animal> animal = nullptr;
+unique_ptr<Animal> AnimalShelter::dequeueAny() {
+  unique_ptr<Animal> animal = nullptr;
   int queue_idx = -1;
   unsigned long long arrival = numeric_limits<unsigned long long>::max();
   for (int idx = 0; idx < _animalQueues.size(); ++idx) {
@@ -97,11 +102,44 @@ shared_ptr<Animal> AnimalShelter::dequeueAny() {
     }
   }
   if (queue_idx >= 0) {
-    animal = _animalQueues[queue_idx].front()._animal;
+    animal = move(_animalQueues[queue_idx].front()._animal);
     _animalQueues[queue_idx].pop();
   }
   return animal;
 }
+
+TEST(animal_shelter_test, nominal) {
+  AnimalShelter shelter;
+  ASSERT_NO_THROW(shelter.enqueue(make_unique<Dog>("bobby")));
+  ASSERT_NO_THROW(shelter.enqueue(make_unique<Dog>("golia")));
+  ASSERT_NO_THROW(shelter.enqueue(make_unique<Cat>("pussy")));
+
+  unique_ptr<Animal> a;
+
+  // get bobby
+  ASSERT_NE(nullptr, a = shelter.dequeueAny());
+  ASSERT_EQ(Animal::dog, a->get_type());
+  ASSERT_EQ("bobby", a->getName());
+
+  // get pussy
+  ASSERT_NE(nullptr, a = shelter.dequeueType(Animal::cat));
+  ASSERT_EQ(Animal::cat, a->get_type());
+  ASSERT_EQ("pussy", a->getName());
+
+  // try to get cat
+  ASSERT_EQ(nullptr, a = shelter.dequeueType(Animal::cat));
+
+  // get golia
+  ASSERT_NE(nullptr, a = shelter.dequeueAny());
+  ASSERT_EQ(Animal::dog, a->get_type());
+  ASSERT_EQ("golia", a->getName());
+
+  // try to get cat
+  ASSERT_EQ(nullptr, a = shelter.dequeueAny());
+  ASSERT_EQ(nullptr, a = shelter.dequeueType(Animal::cat));
+  ASSERT_EQ(nullptr, a = shelter.dequeueType(Animal::dog));
+}
+
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleMock(&argc, argv);
