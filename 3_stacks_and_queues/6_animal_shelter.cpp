@@ -37,7 +37,7 @@ private:
 
 class Dog : public Animal {
 public:
-  Dog(string name): Animal(name) {};
+  Dog(string name): Animal(move(name)) {};
   animalType get_type() const {
     return Animal::dog;
   }
@@ -45,7 +45,7 @@ public:
 
 class Cat : public Animal {
 public:  
-  Cat(string name): Animal(name) {};
+  Cat(string name): Animal(move(name)) {};
   animalType get_type() const {
     return Animal::cat;
   }
