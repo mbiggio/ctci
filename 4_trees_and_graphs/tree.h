@@ -11,8 +11,11 @@ struct TreeNode {
   TreeNode *right;
 };
 
-struct TreeNodeWithParent : public TreeNode {
-  TreeNodeWithParent(int val) : TreeNode(val), parent(nullptr) {};
+struct TreeNodeWithParent {
+  TreeNodeWithParent(int val) : val(val), left(nullptr) , right(nullptr), parent(nullptr) {};
+  int val;
+  TreeNodeWithParent *left;
+  TreeNodeWithParent *right;
   TreeNodeWithParent *parent;
 };
 
