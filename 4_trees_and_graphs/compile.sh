@@ -7,3 +7,4 @@ g++ --std=c++11 3_list_of_depths.cpp /usr/lib/libgtest.a /usr/lib/libgtest_main.
 g++ --std=c++11 4_check_balanced.cpp /usr/lib/libgtest.a /usr/lib/libgtest_main.a /usr/lib/libgmock.a /usr/lib/libgmock_main.a  -pthread  -o 4_check_balanced
 g++ --std=c++11 5_validate_bst.cpp /usr/lib/libgtest.a /usr/lib/libgtest_main.a /usr/lib/libgmock.a /usr/lib/libgmock_main.a  -pthread  -o 5_validate_bst
 g++ --std=c++11 6_successor.cpp /usr/lib/libgtest.a /usr/lib/libgtest_main.a /usr/lib/libgmock.a /usr/lib/libgmock_main.a  -pthread  -o 6_successor
+g++ --std=c++11 7_build_order.cpp /usr/lib/libgtest.a /usr/lib/libgtest_main.a /usr/lib/libgmock.a /usr/lib/libgmock_main.a  -pthread  -o 7_build_order
