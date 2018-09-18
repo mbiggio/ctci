@@ -9,3 +9,4 @@ g++ --std=c++11 5_validate_bst.cpp /usr/lib/libgtest.a /usr/lib/libgtest_main.a 
 g++ --std=c++11 6_successor.cpp /usr/lib/libgtest.a /usr/lib/libgtest_main.a /usr/lib/libgmock.a /usr/lib/libgmock_main.a  -pthread  -o 6_successor
 g++ --std=c++11 7_build_order.cpp /usr/lib/libgtest.a /usr/lib/libgtest_main.a /usr/lib/libgmock.a /usr/lib/libgmock_main.a  -pthread  -o 7_build_order
 g++ --std=c++11 8_first_common_ancestor.cpp /usr/lib/libgtest.a /usr/lib/libgtest_main.a /usr/lib/libgmock.a /usr/lib/libgmock_main.a  -pthread  -o 8_first_common_ancestor
+g++ --std=c++11 9_bst_sequences.cpp /usr/lib/libgtest.a /usr/lib/libgtest_main.a /usr/lib/libgmock.a /usr/lib/libgmock_main.a  -pthread  -o 9_bst_sequences
